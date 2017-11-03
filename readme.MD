@@ -1,3 +1,5 @@
+python3 manage.py runserver
+
 superuser:admin
 password:admin
 
