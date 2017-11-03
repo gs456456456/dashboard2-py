@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+        {% load staticfiles %}
+    <title>Title</title>
+            <script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+</head>
+<body>
+<div style="font-size: 30px">跳转成功!</div>
+<button id="logout" href="/loginout/">登出</button>
+<div>I am computer</div>
+</body>
+</html>
+<script>
+    var ifmobile;
+        function isMobile(){
+        var ua = navigator.userAgent;
+        var ipad = ua.match(/(iPad).*OS\s([\d_]+)/),
+            isIphone = !ipad && ua.match(/(iPhone\sOS)\s([\d_]+)/),
+            isAndroid = ua.match(/(Android)\s+([\d.]+)/),
+            isMobile = isIphone || isAndroid;
+        if(isMobile) {
+            ifmobile = 'mobile'
+            window.location.href = '/mobilepersonalist/'
+        }
+        else {
+            ifmobile = 'notmobile'
+        }
+      }
+    isMobile()
+    var cookiestring;
+    var cookieuser;
+    var s1;
+    var s2;
+    cookiestring = document.cookie;
+    s1 = cookiestring.search(/username:/);
+    s2 = cookiestring.search(/; csrftoken/);
+    var le = s2-9;
+    cookieuser = cookiestring.substr(9, le);
+    $(document).ready(function(){
+        if(cookieuser==='admin'){
+            $('body').append("<div style='font-size:200%;'>admin</div>")
+        }
+        else if(cookieuser==='a'){
+            $('body').append("<div style='font-size:200%;'>a</div>")
+        }
+        else {
+            $('body').append("<div style='font-size:200%;'>b</div>")
+        }
+        $.ajaxSetup({
+            data: {csrfmiddlewaretoken: '{{ csrf_token }}'}
+        })
+        $('#logout').click(function(){
+        $.post('/loginout/',{loginout:'loginout'},
+        function(){
+            console.log('loginout!')
+            window.location.href='/'
+        })
+    })
+
+    })
+
+</script>

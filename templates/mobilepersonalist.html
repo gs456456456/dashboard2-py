@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+        {% load staticfiles %}
+    <title>Title</title>
+    <script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+</head>
+<body>
+<div id="max">
+<div style="font-size:200%;">跳转成功!</div>
+<button  style="font-size:200%;" id="logout" href="/loginout/">登出</button>
+<div style="font-size:200%;">l am mobile</div>
+</div>
+</body>
+</html>
+<script>
+    var cookiestring;
+    var cookieuser;
+    var s1;
+    var s2;
+    cookiestring = document.cookie;
+    s1 = cookiestring.search(/username:/);
+    s2 = cookiestring.search(/; csrftoken/);
+    var le = s2-9;
+    cookieuser = cookiestring.substr(9, le);
+    console.log(cookieuser);
+
+    $(document).ready(function(){
+        if(cookieuser==='admin'){
+            $('body').append("<div style='font-size:200%;'>admin</div>")
+        }
+        else if(cookieuser==='a'){
+            $('body').append("<div style='font-size:200%;'>a</div>")
+        }
+        else {
+            $('body').append("<div style='font-size:200%;'>b</div>")
+        }
+        $.ajaxSetup({
+            data: {csrfmiddlewaretoken: '{{ csrf_token }}'}
+        })
+
+        $('#logout').click(function(){
+        $.post('/loginout/',{loginout:'loginout'},
+        function(){
+            console.log('loginout!')
+            window.location.href='/'
+        })
+    })
+
+    })
+</script>
+

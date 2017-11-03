@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        {% load staticfiles %}
+    <meta charset="UTF-8">
+    <title>Title</title>
+            <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'amcharts/plugins/export/export.css' %}" type="text/css" media="all" />
+        <link rel="stylesheet" href="{% static 'css/video-js.css' %}">
+    <script src="{% static 'js/jquery-1.11.1.js' %}"></script>
+        <script src="{% static 'js/video.js' %}"></script>
+    <script src="{% static 'js/videojs-flash.js' %}"></script>
+    <script src="{% static 'js/videojs-contrib-hls.js' %}"></script>
+    <script src="{% static 'js/videojs-ie8.min.js' %}"></script>
+        <script src="{% static 'amcharts/amcharts.js' %}"></script>
+    <script src="{% static 'amcharts/serial.js' %}"></script>
+     <script src="{% static 'amcharts/plugins/export/export.min.js' %}"></script>
+     <script src="{% static 'amcharts/themes/light.js' %}"></script>
+
+</head>
+<style>
+
+    body{
+        background-color: #f1f3fa;
+        z-index:2;
+    }
+    .col-xs-1-8,.col-sm-1-8,.col-md-1-8,.col-lg-1-8 {
+          min-height: 1px;
+          padding-left: 15px;
+          padding-right: 15px;
+          position: relative;
+        }
+
+        .col-xs-1-8 {
+          width: 12.5%;
+          float: left;
+        }
+
+        @media (min-width: 768px) {
+          .col-sm-1-8 {
+            width: 12.5%;
+            float: left;
+          }
+        }
+
+        @media (min-width: 992px) {
+          .col-md-1-8 {
+            width: 12.5%;
+            float: left;
+          }
+        }
+
+        @media (min-width: 1200px) {
+          .col-lg-1-8 {
+            width: 12.5%;
+            float: left;
+          }
+        }
+
+        .col-xs-1-10,.col-sm-1-10,.col-md-1-10,.col-lg-1-10 {
+          min-height: 1px;
+          padding-left: 15px;
+          padding-right: 15px;
+          position: relative;
+        }
+
+        .col-xs-1-10 {
+          width: 10%;
+          float: left;
+        }
+
+        @media (min-width: 768px) {
+          .col-sm-1-10 {
+            width: 10%;
+            float: left;
+          }
+        }
+
+        @media (min-width: 992px) {
+          .col-md-1-10 {
+            width: 10%;
+            float: left;
+          }
+        }
+
+        @media (min-width: 1200px) {
+          .col-lg-1-10 {
+            width: 11.11%;
+            float: left;
+          }
+        }
+
+    #title{
+        height: 70px;
+        background-color: #f1f3fa;
+    }
+    #line1{
+        margin-top: 10px;
+    }
+    #line1col1{
+        height: 270px;
+        border: 3px solid #e3e3e3;
+        margin-left: 40px;
+    }
+    #line1col1-1{
+        height: 200px;
+    }
+    #line1col1-2{
+        margin-top: 90px;
+        height: 50px;
+    }
+    #line1col2{
+        height: 270px;
+        border: 3px solid #e3e3e3;
+        margin-left: 40px;
+    }
+    #line1col2-1{
+        height: 200px;
+        margin-left: -6px;
+    }
+    #line1col2-2 {
+        margin-top: 90px;
+        height: 50px;
+    }
+    #line1col3{
+        height: 270px;
+        margin-left: 40px;
+        border: 3px solid #e3e3e3;
+    }
+    #line1col4{
+        height: 270px;
+        margin-left: 40px;
+        border: 3px solid #e3e3e3;
+
+    }
+    #line1col5{
+        height: 270px;
+        margin-left: 40px;
+        border: 3px solid #e3e3e3;
+
+    }
+    #line1col6{
+        height: 270px;
+        margin-left: 40px;
+        border: 3px solid #e3e3e3;
+
+    }
+    #line1col7{
+        height: 270px;
+        margin-left: 40px;
+        border: 3px solid #e3e3e3;
+
+    }
+    #line1col8{
+        border: 3px solid #e3e3e3;
+        margin-left: 40px;
+        height: 300px;
+
+    }
+    #line2{
+        margin-top: 50px;
+    }
+    #line2col1{
+        height: 500px;
+        margin-left: 30px;
+    }
+    #line2col1-1{
+        height: 210px;
+        background-color: #f7f7f7;
+        border: 3px solid #e3e3e3;
+
+    }
+    #line2col1-2{
+        height: 210px;
+        background-color: white;
+        margin-top: 40px;
+        border: 3px solid #e3e3e3;
+    }
+    #line2col2{
+                height: 500px;
+        margin-left: 30px;
+    }
+    #line2col2-1{
+        height: 210px;
+        background-color: white;
+        border: 3px solid #e3e3e3;
+    }
+    #line2col2-2{
+        height: 210px;
+        background-color: white;
+        border: 3px solid #e3e3e3;
+         margin-top: 40px;
+    }
+    #line2col3{
+        height: 500px;
+        margin-left: 30px;
+    }
+    #line2col3-1{
+        height: 210px;
+        background-color: white;
+        border: 3px solid #e3e3e3;
+    }
+    #line2col3-2
+    {
+        height: 210px;
+{#        background-color: red;#}
+         margin-top: 40px;
+        border: 3px solid #e3e3e3;
+    }
+    #line2col4{
+{#        background-color: yellow;#}
+        height: 210px;
+        margin-left: 30px;
+    }
+    #line2col4-1{
+        height: 210px;
+{#        background-color: grey;#}
+        border: 3px solid #e3e3e3;
+    }
+    #line2col4-2
+    {
+        height: 210px;
+{#        background-color: red;#}
+         margin-top: 40px;
+{#        border: 3px solid #e3e3e3;#}
+    }
+    #line2col5{
+{#        background-color: yellow;#}
+        height: 480px;
+        margin-left: 40px;
+        z-index: 20;
+    }
+    #line2col6{
+{#        background-color: yellow;#}
+        height: 480px;
+        margin-left: 100px;
+        margin-top: -10px;
+    }
+    #line2col6-1{
+        height: 120px;
+        border: 3px solid #e3e3e3;
+    }
+    #line2col6-2{
+        height: 380px;
+        margin-top: 20px;
+        border: 3px solid #e3e3e3;
+    }
+    #myvideo{
+        z-index:100;
+    }
+    #chartdiv {
+        width: 100%;
+        height: 100%;
+        z-index: 100;
+        font-size: 11px;
+}
+    #logo{
+        position: relative;
+        right: -1480px;
+    }
+    .machinearg{
+        position: relative;
+        left: 10%;
+        font-size: 18px;
+        top:4%;
+        color: grey;
+    }
+    .machinename{
+        position: relative;
+        left: 18%;
+        font-size: 24px;
+        top:2%
+    }
+    .subtitle{
+        font-size: 26px;
+        font-family: "Microsoft YaHei";
+        position: relative;
+        left: 33%;
+        top:5%;
+        color: #646464;
+    }
+    .subtitle2{
+        font-size: 26px;
+        font-family: "Microsoft YaHei";
+        position: relative;
+        left: 38%;
+        top:5%;
+        color: #646464;
+    }
+    .subtitle3{
+        font-size: 26px;
+        font-family: "Microsoft YaHei";
+        position: relative;
+        left: 34%;
+        top:1%;
+        color: #646464;
+    }
+    .subtitle6{
+        font-size: 26px;
+        font-family: "Microsoft YaHei";
+        position: relative;
+        left: 27%;
+        top:5%;
+        color: #646464;
+    }
+    .subtitle7{
+        font-size: 26px;
+        font-family: "Microsoft YaHei";
+        position: relative;
+        left: 25%;
+        top:2%;
+        color: #646464;
+    }
+        .subtitle8{
+        font-size: 24px;
+        font-family: "Microsoft YaHei";
+            margin-top: 11px;
+        position: relative;
+        left: 26%;
+        top:2%;
+        color: #646464;
+    }
+    .context{
+        margin-left: 12px;
+        font-size: 16px;
+        margin-top: 5px;
+{#        letter-spacing: 1px;#}
+    }
+    .context2{
+        margin-left: 6.75px;
+        font-size: 15px;
+        margin-top: 5px;
+    }
+    .context3{
+        margin-left: 4px;
+        font-size: 16px;
+        margin-top: 8px;
+{#        letter-spacing: 1px;#}
+    }
+    .context4{
+        margin-left: 30px;
+        font-size: 18px;
+        margin-top: 10px;
+    }
+    .context5{
+        margin-left: 30px;
+        font-size: 16px;
+        margin-top: 3px;
+    }
+    span{
+        font-weight: 600;
+        font-size: 16px;
+        color: #009933;
+    }
+</style>
+<body>
+<div id="total">
+    <div id="title">
+        <div style="position: absolute;font-size: 30px;font-family:'PingFang TC';color: #646464;top:19px;left: 30px;font-weight: 400">糖果厂的用户体验</div>
+        <div style="position: absolute;top:10px;left: 34%;font-size: 42px;font-family:'Microsoft YaHei';color: #646464;">施耐德电器云平台"机器顾问"</div>
+        <img id="logo" src="{% static 'img/logo.png' %}" width="21%" height="120%">
+    </div>
+<hr style="height:1px;border:none;border-top:1px solid #e3e3e3;"/>
+    <div class="container-fluid">
+        <div class="row" id="line1">
+            <div class="col-md-1-10 col-sm-12" id="line1col1">
+
+{#                <div id="myvideo">#}
+{#                </div>#}
+                <div id="line1col1-1"><div id="pro1">
+                    <div class="subtitle">上盒</div>
+                    <div class="context">上盒总量:<span>300个</span></div>
+                    <div class="context">绿色上盒总量:<span>300个</span></div>
+                    <div class="context">红色上盒总量:<span>300个</span></div>
+                    <div class="context">粉色上盒总量:<span>300个</span></div>
+                    <div class="context">上盒当前小时产量:<span>300个</span></div>
+                    <div class="context">上盒工位生产状态:<span>300个</span></div>
+                </div></div>
+                <div id="line1col1-2"><button type="button" class="btn btn-default btn-lg btn-block" id="btn1">1</button></div>
+            </div>
+            <div class="col-md-1-10 col-sm-12" id="line1col2">
+                    <div id="line1col2-1"><div id="pro2">
+                        <div class="subtitle2">装糖</div>
+                    <div class="context2">装糖当小时产量:<span>300个</span></div>
+                    <div class="context2">仓A剩余量糖果数量:<span>300个</span></div>
+                    <div class="context2">仓B剩余量糖果数量:<span>300个</span></div>
+                    <div class="context2">仓C剩余量糖果数量:<span>300个</span></div>
+                        <div class="context2">装糖工位生产状态:<span>300个</span></div>
+                    </div></div>
+                <div id="line1col2-2"><button type="button" class="btn btn-default btn-lg btn-block" id="btn2">块级的按钮</button></div>
+            </div>
+            <div class="col-md-1-10 col-sm-12" id="line1col3">
+{#                                <div style="position: absolute;left: 16%;color:#009933;font-size: 30px">1</div>#}
+{#                    <div class="machinename"><p>dasdasdasd</p></div>#}
+{#                    <div class="machinearg"><p>asdasdasdasdasdasdasdasdasdasdasdasdasd</p></div>#}
+
+                <div id="pro3">
+                    <div class="subtitle">称重</div>
+                    <div class="context">称重产量:<span>300个</span></div>
+                    <div class="context">称重当小时产量:<span>300个</span></div>
+                    <div class="context">糖盒重量:<span>300个</span></div>
+                    <div class="context">称重工位生产状态:<span>300个</span></div>
+                </div>
+            </div>
+            <div class="col-md-1-10 col-sm-12" id="line1col4">
+                <div id="pro4">
+                <div class="subtitle">打标</div>
+                <div class="context">打标工位生产状态:<span>300个</span></div>
+            </div>
+            </div>
+            <div class="col-md-1-10 col-sm-12" id="line1col5">
+                <div id="pro5">
+                <div class="subtitle">喷墨</div>
+                <div class="context">喷墨工位生产状态:<span>300个</span></div>
+            </div>
+            </div>
+            <div class="col-md-1-10 col-sm-12" id="line1col6">
+                <div id="pro6">
+                <div class="subtitle6">出入库</div>
+                <div class="context">出入库工位生产状态:<span>300个</span></div>
+                <div class="context">入库产量:<span>300个</span></div>
+                <div class="context">出库量:<span>300个</span></div>
+                <div class="context">入库当前小时产量:<span>300个</span></div>
+            </div>
+            </div>
+            <div class="col-md-1-10 col-sm-12" id="line1col7">
+                <div id="pro7">
+                <div class="subtitle6">机器人</div>
+                <div class="context">出入库工位机器人生产状态:<span>300个</span></div>
+            </div>
+            </div>
+            <div class="col-md-1-10 col-sm-12" id="line1col8">
+                <div class="subtitle3">统计</div>
+                <div class="context3">质检员:<span>300个</span></div>
+                <div class="context3">当前班次:<span>300个</span></div>
+                <div class="context3">当前员工卡号:<span>300个</span></div>
+                <div class="context3">当前系统设备维护员卡号:<span>300个</span></div>
+                <div class="context3">产线电能:<span>300个</span></div>
+                <div class="context3">产线气能:<span>300个</span></div>
+            </div>
+        </div>
+        <div class="row" id="line2">
+            <div class="col-md-6 col-sm-12" id="line2col1">
+                                <div id="chartdiv"></div>
+            </div>
+
+            <div class="col-md-3 col-sm-12" id="line2col5">
+                <canvas id="myCanvas" width="480" height="480" style="border: 3px solid #e3e3e3;"></canvas>
+            </div>
+            <div class="col-md-1-8 col-sm-12" id="line2col6">
+                <div id="line2col6-1">
+                    <div class="subtitle7">取货提醒</div>
+                    <div class="context4">取货订单号:<span>300个</span></div>
+                    <div class="context4" style="margin-top: 8px">取货仓库号:<span>300个</span></div>
+                </div>
+                <div id="line2col6-2">
+                    <div>
+                        <div class="subtitle8" style="margin-top: 7px">当前订单1</div>
+                        <div class="context5">编号:<span>111111111</span></div>
+                        <div class="context5">客户电话:<span>111111111</span></div>
+                        <div class="context5">存放库号:<span>111111111</span></div>
+                    </div>
+
+                    <div>
+                        <div class="subtitle8">当前订单2</div>
+                        <div class="context5">编号:<span>111111111</span></div>
+                        <div class="context5">客户电话:<span>111111111</span></div>
+                        <div class="context5">存放库号:<span>111111111</span></div></div>
+                    <div>
+                        <div class="subtitle8">预备订单</div>
+                        <div class="context5">编号:<span>111111111</span></div>
+                        <div class="context5">客户电话:<span>111111111</span></div>
+                        <div class="context5">存放库号:<span>111111111</span></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div></div>
+</div>
+</body>
+<script>
+    //绝对定位删除文档流，相对定位不删除文档流
+    var player
+    var chart
+    var mycanvas
+    var canvasxy
+    var mousex
+    var mousey
+    var randomcount
+
+
+    //定义节点是否存在
+{#        Object.prototype.exist = function(){#}
+{#            if(typeof this !='undefined' && this.length>=1){#}
+{#                    return true;#}
+{#        }#}
+{##}
+{#        return false;#}
+{#        };#}
+    //获取坐标
+    function getPointOnCanvas(canvas, x, y) {
+
+    var bbox =canvas.getBoundingClientRect();
+
+    return { x: x- bbox.left *(canvas.width / bbox.width),
+
+            y:y - bbox.top  * (canvas.height / bbox.height)
+
+            };
+
+}
+
+
+{#            sqr = new Sqr(10,"red",1)#}
+{#            sqr.mydraw()#}
+{#            sqr.fillcolor()#}
+{#            sqr.imagesave()#}
+
+      $(function(){
+          //判断是否存在dom对象
+              $.fn.exist = function(){
+                if($(this).length>=1){
+                    return true;
+                }
+                return false;
+            };
+
+
+          function getMousePos(event) {
+    var e = event || window.event;
+    var scrollX = document.documentElement.scrollLeft || document.body.scrollLeft;
+    var scrollY = document.documentElement.scrollTop || document.body.scrollTop;
+    var x = e.pageX || e.clientX + scrollX;
+    var y = e.pageY || e.clientY + scrollY;
+    return { 'x': x, 'y': y };
+}
+    mousex = getMousePos()['x']
+    mousey = getMousePos()['y']
+    console.log(mousex,mousey)
+          console.log(getMousePos())
+
+               class Sqr{
+              constructor(num,color,linewidth) {
+                  this.ctx = 0;
+                  this.righttop = 0;
+                  this.rightbottom = 0;
+                  this.lefttop=0;
+                  this.leftbottom=0;
+                  this.a = 0;
+                  this.b = 0;
+                  this.c = 96;
+                  this.d = 96;
+                  this.num = num;
+                  this.color = color;
+                  this.linewidth = linewidth;
+                  this.imgdata = 0;
+
+{#                Circle.circlesMade++;#}
+            };
+              static getInstance() {
+                    if (!Sqr.instance) {
+                      Sqr.instance = new Sqr();
+                    }
+                    return Sqr.instance;
+                  }
+              mydraw() {
+                  mycanvas=document.getElementById("myCanvas");
+{#                  canvasxy = getPointOnCanvas(mycanvas,window.event.pageX,window.event.pageY)#}
+{#                  console.log(canvasxy)#}
+                  this.ctx = mycanvas.getContext("2d");
+                  this.ctx.strokeStyle = "#ffffff"
+                  this.ctx.lineWidth = this.linewidth
+                  var row
+                  var col
+                  if (parseInt(this.num/5)===this.num/5){
+                      row = (this.num/5)-1
+                  }
+                    else {
+                        row = parseInt(this.num/5)
+                  }
+                  console.log(row)
+                  if (this.num%5===0){
+                      col = 5
+                  }
+                    else {
+                      col = this.num %5
+                  }
+                  console.log(col)
+                  this.ctx.beginPath();
+                  this.ctx.moveTo(96*col,96*row);
+                  this.ctx.lineTo(96*col,96*(row+1));
+                  this.ctx.lineTo(96*col-96,96*(row+1));
+                  this.ctx.lineTo(96*col-96,96*row);
+                  this.ctx.lineTo(96*col,96*row)
+                  this.a = 96*col-96
+                  this.b = 96*row
+                  this.ctx.stroke()
+                  this.ctx.closePath();
+                  console.log('asdasdasdasd')
+            }
+               fillcolor(){
+                   this.ctx.beginPath();
+                   this.ctx.fillStyle = this.color
+                   this.ctx.fillRect(this.a,this.b,this.c,this.d);
+                   this.ctx.closePath();
+                   this.imgdata = this.ctx.getImageData(this.a,this.b,this.c,this.d);
+                                      console.log('111213123131'+this.imgdata)
+              }
+                imagesave(){
+                    this.ctx.putImageData(this.imgdata,96,96);
+                }
+          }
+
+            function output(){
+                console.log('interval is running!')
+            }
+          function a1(){
+               randomcount = Math.random()
+              console.log('I am testing')
+              if (randomcount <0.5){
+                  sqr = new Sqr(5,"red",1)
+                  sqr.mydraw()
+           sqr.fillcolor()              }
+              else{
+                  sqr = new Sqr(5,"yellow",1)
+                sqr.mydraw()
+           sqr.fillcolor()
+                  }
+
+}
+          function b1(){
+                sqr = new Sqr(4,"red",1)
+              sqr.mydraw()
+           sqr.fillcolor()}
+          function c1(){
+                sqr = new Sqr(7,"blue",1)
+                sqr.mydraw()
+           sqr.fillcolor()}
+
+
+
+
+            //切换视频
+            $('#btn1').click(function(){
+                if($("#myvideo").exist()){
+                        return
+                }
+                else {
+                 console.log(11111)
+                    $('#chartdiv').remove()
+                    $('#line2col1').append('<div id="myvideo"></div>')
+                    $('#myvideo').append("<video id='live-stream'  class='video-js vjs-default-skin vjs-big-play-centered'controls autoplay preload='auto' width='850' height='480' data-setup='{}'> <source src='http://hls.open.ys7.com/openlive/fe9f8c687232404d9e6656d743723cb8.hd.m3u8' type='application/x-mpegURL'></video>")
+                    var options = {
+                controlBar: {
+                }
+                }
+                player = videojs('live-stream', options);
+            player.on(['loadstart', 'play', 'playing', 'firstplay', 'pause', 'ended', 'adplay', 'adplaying', 'adfirstplay', 'adpause', 'adended', 'contentplay', 'contentplaying', 'contentfirstplay', 'contentpause', 'contentended', 'contentupdate'],
+                    function(e) {
+        console.warn('VIDEOJS player event: ',  e.type);
+    });
+                }
+            })
+
+            $('#btn2').click(function(){
+                if($("#chartdiv").exist()){return}
+                else { player.dispose()
+                $('#myvideo').remove()
+                $('#line2col1').append('<div id="chartdiv"></div>')
+            chart = AmCharts.makeChart("chartdiv", {
+                "type": "serial",
+                "theme": "light",
+                "marginRight": 80,
+                "dataProvider": [{
+                    "lineColor": "#009933",
+                    "date": "2012-01-01",
+                    "duration": 408
+                }, {
+                    "date": "2012-01-02",
+                    "duration": 482
+                }, {
+                    "date": "2012-01-03",
+                    "duration": 562
+                }, {
+                    "date": "2012-01-04",
+                    "duration": 379
+                }, {
+                    "lineColor": "#009933",
+                    "date": "2012-01-05",
+                    "duration": 501
+                }, {
+                    "date": "2012-01-06",
+                    "duration": 443
+                }, {
+                    "date": "2012-01-07",
+                    "duration": 405
+                }, {
+                    "date": "2012-01-08",
+                    "duration": 309,
+                    "lineColor": "#009933"
+                }, {
+                    "date": "2012-01-09",
+                    "duration": 287
+                }, {
+                    "date": "2012-01-10",
+                    "duration": 485
+                }, {
+                    "date": "2012-01-11",
+                    "duration": 890
+                }, {
+                    "date": "2012-01-12",
+                    "duration": 810
+                }],
+                "balloon": {
+                    "cornerRadius": 6,
+                    "horizontalPadding": 15,
+                    "verticalPadding": 10
+                },
+                "valueAxes": [{
+                    "duration": "mm",
+                    "durationUnits": {
+                        "hh": "h ",
+                        "mm": "min"
+                    },
+                    "axisAlpha": 0
+                }],
+                "graphs": [{
+                    "bullet": "square",
+                    "bulletBorderAlpha": 1,
+                    "bulletBorderThickness": 1,
+                    "fillAlphas": 0.3,
+                    "fillColorsField": "lineColor",
+                    "legendValueText": "[[value]]",
+                    "lineColorField": "lineColor",
+                    "title": "duration",
+                    "valueField": "duration"
+                }],
+                "chartScrollbar": {
+
+                },
+                "chartCursor": {
+                    "categoryBalloonDateFormat": "YYYY MMM DD",
+                    "cursorAlpha": 0,
+                    "fullWidth": true
+                },
+                "dataDateFormat": "YYYY-MM-DD",
+                "categoryField": "date",
+                "categoryAxis": {
+                    "dateFormats": [{
+                        "period": "DD",
+                        "format": "DD"
+                    }, {
+                        "period": "WW",
+                        "format": "MMM DD"
+                    }, {
+                        "period": "MM",
+                        "format": "MMM"
+                    }, {
+                        "period": "YYYY",
+                        "format": "YYYY"
+                    }],
+                    "parseDates": true,
+                    "autoGridCount": false,
+                    "axisColor": "#555555",
+                    "gridAlpha": 0,
+                    "gridCount": 50
+                },
+                "export": {
+                    "enabled": true
+                }
+            });
+
+
+
+
+            chart.addListener("dataUpdated", zoomChart);
+
+            function zoomChart() {
+                chart.zoomToDates(new Date(2012, 0, 3), new Date(2012, 0, 11));
+            }}
+
+            })
+
+
+
+          /* 当前页面高度 */
+            function pageHeight() {
+                return document.body.scrollHeight;
+            }
+
+            /* 当前页面宽度 */
+            function pageWidth() {
+                return document.body.scrollWidth;
+            }
+                    /* 显示遮罩层 */
+            function showOverlay() {
+                $("#overlay").height(pageHeight());
+                $("#overlay").width(pageWidth());
+                $("#overlay").removeClass('disappear')
+                // fadeTo第一个参数为速度，第二个为透明度
+                // 多重方式控制透明度，保证兼容性，但也带来修改麻烦的问题
+//                $("#overlay").fadeTo(200, 0.5);
+            }
+
+            /* 隐藏覆盖层 */
+            function hideOverlay() {
+//                $("#overlay").fadeOut(200);
+                $("#overlay").addClass('disappear')
+            }
+
+{#            showOverlay()#}
+
+
+{#        $(".vjs-control-bar").append('<button class="vjs-control" id="danmu_send_opt">退出</button>');#}
+{#                    $('#danmu_send_opt').click(#}
+{#                            function(){#}
+{#                                player.dispose()//释放player#}
+{#                        $('#live-stream').remove()#}
+{#                                hideOverlay()#}
+{#                                }#}
+{#                    )#}
+
+
+          ////chart
+                    chart = AmCharts.makeChart("chartdiv", {
+                "type": "serial",
+                "theme": "light",
+                "marginRight": 80,
+                "dataProvider": [{
+                    "lineColor": "#009933",
+                    "date": "2012-01-01",
+                    "duration": 408
+                }, {
+                    "date": "2012-01-02",
+                    "duration": 482
+                }, {
+                    "date": "2012-01-03",
+                    "duration": 562
+                }, {
+                    "date": "2012-01-04",
+                    "duration": 379
+                }, {
+                    "lineColor": "#009933",
+                    "date": "2012-01-05",
+                    "duration": 501
+                }, {
+                    "date": "2012-01-06",
+                    "duration": 443
+                }, {
+                    "date": "2012-01-07",
+                    "duration": 405
+                }, {
+                    "date": "2012-01-08",
+                    "duration": 309,
+                    "lineColor": "#009933"
+                }, {
+                    "date": "2012-01-09",
+                    "duration": 287
+                }, {
+                    "date": "2012-01-10",
+                    "duration": 485
+                }, {
+                    "date": "2012-01-11",
+                    "duration": 890
+                }, {
+                    "date": "2012-01-12",
+                    "duration": 810
+                }],
+                "balloon": {
+                    "cornerRadius": 6,
+                    "horizontalPadding": 15,
+                    "verticalPadding": 10
+                },
+                "valueAxes": [{
+                    "duration": "mm",
+                    "durationUnits": {
+                        "hh": "h ",
+                        "mm": "min"
+                    },
+                    "axisAlpha": 0
+                }],
+                "graphs": [{
+                    "bullet": "square",
+                    "bulletBorderAlpha": 1,
+                    "bulletBorderThickness": 1,
+                    "fillAlphas": 0.3,
+                    "fillColorsField": "lineColor",
+                    "legendValueText": "[[value]]",
+                    "lineColorField": "lineColor",
+                    "title": "duration",
+                    "valueField": "duration"
+                }],
+                "chartScrollbar": {
+
+                },
+                "chartCursor": {
+                    "categoryBalloonDateFormat": "YYYY MMM DD",
+                    "cursorAlpha": 0,
+                    "fullWidth": true
+                },
+                "dataDateFormat": "YYYY-MM-DD",
+                "categoryField": "date",
+                "categoryAxis": {
+                    "dateFormats": [{
+                        "period": "DD",
+                        "format": "DD"
+                    }, {
+                        "period": "WW",
+                        "format": "MMM DD"
+                    }, {
+                        "period": "MM",
+                        "format": "MMM"
+                    }, {
+                        "period": "YYYY",
+                        "format": "YYYY"
+                    }],
+                    "parseDates": true,
+                    "autoGridCount": false,
+                    "axisColor": "#555555",
+                    "gridAlpha": 0,
+                    "gridCount": 50
+                },
+                "export": {
+                    "enabled": true
+                }
+            });
+
+
+
+            chart.addListener("dataUpdated", zoomChart);
+
+            function zoomChart() {
+                chart.zoomToDates(new Date(2012, 0, 3), new Date(2012, 0, 11));
+            }
+
+
+          ///格子图
+
+          var sqr = Sqr.getInstance();
+          for(i=0;i<=25;i++){
+              sqr = new Sqr(i,"#f1f3fa",1)//#f1f3fa
+              sqr.mydraw()
+              sqr.fillcolor()
+
+          }
+
+{#            a = new Sqr(8,"red",0.5)#}
+{#            a.mydraw()#}
+{#            a.fillcolor()#}
+          var c=document.getElementById("myCanvas");
+          var ctx=c.getContext("2d");
+          ctx.strokeStyle = "#999999"
+          ctx.lineWidth = 0.5
+          ctx.moveTo(96,0);
+          ctx.lineTo(96,480);
+          ctx.moveTo(192,0);
+          ctx.lineTo(192,480);
+          ctx.moveTo(288,0);
+          ctx.lineTo(288,480);
+          ctx.moveTo(384,0);
+          ctx.lineTo(384,480);
+          ctx.moveTo(0,96);
+          ctx.lineTo(480,96);
+          ctx.moveTo(0,192);
+          ctx.lineTo(480,192);
+          ctx.moveTo(0,288);
+          ctx.lineTo(480,288);
+          ctx.moveTo(0,384);
+          ctx.lineTo(480,384);
+          ctx.stroke();
+
+          var in1 = setInterval(a1,2000);
+          setInterval(b1(),10000);
+          setInterval(c1(),20000);
+{#          setInterval(output(),1000)#}
+
+        })
+</script>
+</html>
