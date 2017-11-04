@@ -6,4 +6,4 @@ password:admin
 /main -->pc
 /mobmain -->mob
 
-smalldemo
+工厂看板 请在1080P下浏览
